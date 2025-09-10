@@ -27,7 +27,6 @@
       ];
 
       const PFC_RATIO = { p: 15, f: 25, c: 60 };
-      const KCAL_PER_G = { p: 4, f: 9, c: 3.75 };
 
       function calcMaintainCalories({ weight, activity }) {
         return Math.round(BASAL_PER_KG_FEMALE_30_49 * weight * activity);
@@ -36,16 +35,16 @@
       function calcDietCalories({ weight, height, age, activity }) {
         const BMR = 10 * weight + 6.25 * height - 5 * age - 161;
         const TDEE = BMR * activity;
-        return Math.round(TDEE * 0.9);
+        return Math.round(TDEE * 0.85); // ✅ 15%カットに変更
       }
 
       function calcPFCFromKcal(totalKcal) {
         const pKcal = Math.round((totalKcal * PFC_RATIO.p) / 100);
         const fKcal = Math.round((totalKcal * PFC_RATIO.f) / 100);
         const cKcal = Math.round((totalKcal * PFC_RATIO.c) / 100);
-        const pG = Math.round(pKcal / KCAL_PER_G.p);
-        const fG = Math.round(fKcal / KCAL_PER_G.f);
-        const cG = Math.round(cKcal / KCAL_PER_G.c);
+        const pG = Math.round(pKcal / 4);
+        const fG = Math.round(fKcal / 9);
+        const cG = Math.round(cKcal / 3.75);
         return { pKcal, fKcal, cKcal, pG, fG, cG };
       }
 
@@ -154,9 +153,6 @@
                   <div className="text-sm text-gray-600">
                     P{PFC_RATIO.p}% / F{PFC_RATIO.f}% / C{PFC_RATIO.c}%
                   </div>
-                  <p className="text-xs text-gray-500">
-                    （P1g×4kcal, F1g×9kcal, C1g×3.75kcal）
-                  </p>
                   <div className="grid grid-cols-3 gap-2 text-center text-sm">
                     <div className="p-3 rounded-xl border">
                       <div className="text-xs text-gray-600">P</div>
@@ -182,9 +178,6 @@
                   <div className="text-sm text-gray-600">
                     P{PFC_RATIO.p}% / F{PFC_RATIO.f}% / C{PFC_RATIO.c}%
                   </div>
-                  <p className="text-xs text-gray-500">
-                    （P1g×4kcal, F1g×9kcal, C1g×3.75kcal）
-                  </p>
                   <div className="grid grid-cols-3 gap-2 text-center text-sm">
                     <div className="p-3 rounded-xl border">
                       <div className="text-xs text-gray-600">P</div>
